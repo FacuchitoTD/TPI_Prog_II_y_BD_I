@@ -1,0 +1,105 @@
+===== Igualdad - Sin índice - corrida 1 =====
+-> Filter: ((p.eliminado = false) and (p.categoria_id = 2))  (cost=987 rows=192) (actual time=0.158..15.4 rows=2000 loops=1)
+    -> Table scan on p  (cost=987 rows=9623) (actual time=0.153..11.4 rows=10001 loops=1)
+
+===== Igualdad - Sin índice - corrida 2 =====
+-> Filter: ((p.eliminado = false) and (p.categoria_id = 2))  (cost=987 rows=192) (actual time=0.0734..11.5 rows=2000 loops=1)
+    -> Table scan on p  (cost=987 rows=9623) (actual time=0.0689..9.45 rows=10001 loops=1)
+
+===== Igualdad - Sin índice - corrida 3 =====
+-> Filter: ((p.eliminado = false) and (p.categoria_id = 2))  (cost=987 rows=192) (actual time=0.0702..9.63 rows=2000 loops=1)
+    -> Table scan on p  (cost=987 rows=9623) (actual time=0.0661..8.16 rows=10001 loops=1)
+
+===== Igualdad - Con índice - corrida 1 =====
+-> Filter: (p.eliminado = false)  (cost=92 rows=192) (actual time=0.137..5.02 rows=2000 loops=1)
+    -> Index lookup on p using categoria_id (categoria_id=2)  (cost=92 rows=1924) (actual time=0.136..4.78 rows=2000 loops=1)
+
+===== Igualdad - Con índice - corrida 2 =====
+-> Filter: (p.eliminado = false)  (cost=92 rows=192) (actual time=0.218..10.4 rows=2000 loops=1)
+    -> Index lookup on p using categoria_id (categoria_id=2)  (cost=92 rows=1924) (actual time=0.216..10.2 rows=2000 loops=1)
+
+===== Igualdad - Con índice - corrida 3 =====
+-> Filter: (p.eliminado = false)  (cost=92 rows=192) (actual time=0.155..6.01 rows=2000 loops=1)
+    -> Index lookup on p using categoria_id (categoria_id=2)  (cost=92 rows=1924) (actual time=0.154..5.78 rows=2000 loops=1)
+
+===== Rango - Sin índice - corrida 1 =====
+-> Filter: ((p.eliminado = false) and (p.precio between 1000 and 5000))  (cost=987 rows=107) (actual time=0.0551..7.16 rows=3997 loops=1)
+    -> Table scan on p  (cost=987 rows=9623) (actual time=0.0505..5.4 rows=10001 loops=1)
+
+===== Rango - Sin índice - corrida 2 =====
+-> Filter: ((p.eliminado = false) and (p.precio between 1000 and 5000))  (cost=987 rows=107) (actual time=0.053..6.03 rows=3997 loops=1)
+    -> Table scan on p  (cost=987 rows=9623) (actual time=0.0483..4.82 rows=10001 loops=1)
+
+===== Rango - Sin índice - corrida 3 =====
+-> Filter: ((p.eliminado = false) and (p.precio between 1000 and 5000))  (cost=987 rows=107) (actual time=0.231..6.65 rows=3997 loops=1)
+    -> Table scan on p  (cost=987 rows=9623) (actual time=0.226..5.36 rows=10001 loops=1)
+
+===== Rango - Con índice - corrida 1 =====
+-> Filter: ((p.eliminado = false) and (p.precio between 1000 and 5000))  (cost=987 rows=107) (actual time=0.0594..10.8 rows=3997 loops=1)
+    -> Table scan on p  (cost=987 rows=9623) (actual time=0.0547..8.61 rows=10001 loops=1)
+
+===== Rango - Con índice - corrida 2 =====
+-> Filter: ((p.eliminado = false) and (p.precio between 1000 and 5000))  (cost=987 rows=107) (actual time=0.0509..6.42 rows=3997 loops=1)
+    -> Table scan on p  (cost=987 rows=9623) (actual time=0.0456..5.11 rows=10001 loops=1)
+
+===== Rango - Con índice - corrida 3 =====
+-> Filter: ((p.eliminado = false) and (p.precio between 1000 and 5000))  (cost=987 rows=107) (actual time=0.0645..8.95 rows=3997 loops=1)
+    -> Table scan on p  (cost=987 rows=9623) (actual time=0.0593..6.5 rows=10001 loops=1)
+
+===== JOIN - Sin índice - corrida 1 =====
+-> Table scan on <temporary>  (actual time=30.5..30.5 rows=5 loops=1)
+    -> Aggregate using temporary table  (actual time=30.5..30.5 rows=5 loops=1)
+        -> Left hash join (p.categoria_id = c.id)  (cost=1973 rows=9623) (actual time=19.8..23.6 rows=5899 loops=1)
+            -> Filter: (c.eliminado = false)  (cost=0.95 rows=1) (actual time=0.15..0.294 rows=5 loops=1)
+                -> Table scan on c  (cost=0.95 rows=7) (actual time=0.146..0.288 rows=7 loops=1)
+            -> Hash
+                -> Filter: (p.eliminado = false)  (cost=987 rows=9623) (actual time=0.0677..6.31 rows=10000 loops=1)
+                    -> Table scan on p  (cost=987 rows=9623) (actual time=0.0637..5.25 rows=10001 loops=1)
+
+===== JOIN - Sin índice - corrida 2 =====
+-> Table scan on <temporary>  (actual time=30.4..30.4 rows=5 loops=1)
+    -> Aggregate using temporary table  (actual time=30.4..30.4 rows=5 loops=1)
+        -> Left hash join (p.categoria_id = c.id)  (cost=1973 rows=9623) (actual time=21.3..24.5 rows=5899 loops=1)
+            -> Filter: (c.eliminado = false)  (cost=0.95 rows=1) (actual time=0.043..0.0796 rows=5 loops=1)
+                -> Table scan on c  (cost=0.95 rows=7) (actual time=0.0373..0.0721 rows=7 loops=1)
+            -> Hash
+                -> Filter: (p.eliminado = false)  (cost=987 rows=9623) (actual time=0.109..14.6 rows=10000 loops=1)
+                    -> Table scan on p  (cost=987 rows=9623) (actual time=0.106..13.7 rows=10001 loops=1)
+
+===== JOIN - Sin índice - corrida 3 =====
+-> Table scan on <temporary>  (actual time=23.5..23.5 rows=5 loops=1)
+    -> Aggregate using temporary table  (actual time=23.5..23.5 rows=5 loops=1)
+        -> Left hash join (p.categoria_id = c.id)  (cost=1973 rows=9623) (actual time=13..17 rows=5899 loops=1)
+            -> Filter: (c.eliminado = false)  (cost=0.95 rows=1) (actual time=0.18..0.199 rows=5 loops=1)
+                -> Table scan on c  (cost=0.95 rows=7) (actual time=0.175..0.194 rows=7 loops=1)
+            -> Hash
+                -> Filter: (p.eliminado = false)  (cost=987 rows=9623) (actual time=0.429..7.11 rows=10000 loops=1)
+                    -> Table scan on p  (cost=987 rows=9623) (actual time=0.426..6.09 rows=10001 loops=1)
+
+===== JOIN - Con índice - corrida 1 =====
+-> Table scan on <temporary>  (actual time=21.4..21.4 rows=5 loops=1)
+    -> Aggregate using temporary table  (actual time=21.4..21.4 rows=5 loops=1)
+        -> Nested loop left join  (cost=266 rows=1925) (actual time=0.313..13.7 rows=5899 loops=1)
+            -> Filter: (c.eliminado = false)  (cost=0.95 rows=1) (actual time=0.069..0.0839 rows=5 loops=1)
+                -> Table scan on c  (cost=0.95 rows=7) (actual time=0.0538..0.0693 rows=7 loops=1)
+            -> Filter: (p.eliminado = false)  (cost=265 rows=1925) (actual time=0.131..2.61 rows=1179 loops=5)
+                -> Index lookup on p using categoria_id (categoria_id=c.id)  (cost=265 rows=1925) (actual time=0.13..2.43 rows=1179 loops=5)
+
+===== JOIN - Con índice - corrida 2 =====
+-> Table scan on <temporary>  (actual time=15.8..15.8 rows=5 loops=1)
+    -> Aggregate using temporary table  (actual time=15.8..15.8 rows=5 loops=1)
+        -> Nested loop left join  (cost=266 rows=1925) (actual time=0.13..10.1 rows=5899 loops=1)
+            -> Filter: (c.eliminado = false)  (cost=0.95 rows=1) (actual time=0.0325..0.0467 rows=5 loops=1)
+                -> Table scan on c  (cost=0.95 rows=7) (actual time=0.0288..0.0427 rows=7 loops=1)
+            -> Filter: (p.eliminado = false)  (cost=265 rows=1925) (actual time=0.0461..1.91 rows=1179 loops=5)
+                -> Index lookup on p using categoria_id (categoria_id=c.id)  (cost=265 rows=1925) (actual time=0.0459..1.81 rows=1179 loops=5)
+
+===== JOIN - Con índice - corrida 3 =====
+-> Table scan on <temporary>  (actual time=20.9..20.9 rows=5 loops=1)
+    -> Aggregate using temporary table  (actual time=20.9..20.9 rows=5 loops=1)
+        -> Nested loop left join  (cost=266 rows=1925) (actual time=0.151..12 rows=5899 loops=1)
+            -> Filter: (c.eliminado = false)  (cost=0.95 rows=1) (actual time=0.0334..0.0507 rows=5 loops=1)
+                -> Table scan on c  (cost=0.95 rows=7) (actual time=0.0297..0.0467 rows=7 loops=1)
+            -> Filter: (p.eliminado = false)  (cost=265 rows=1925) (actual time=0.058..2.28 rows=1179 loops=5)
+                -> Index lookup on p using categoria_id (categoria_id=c.id)  (cost=265 rows=1925) (actual time=0.0576..2.16 rows=1179 loops=5)
+

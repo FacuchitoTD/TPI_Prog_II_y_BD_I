@@ -1,0 +1,36 @@
+2026-11-07 22:10:16.283 [INFORMACIÓN] Stock ANTES: [id 1 - coca cola 1.5l - stock 50] [id 2 - Producto 1 - stock 72]
+2026-11-07 22:10:16.343 [INFORMACIÓN] Pedido-A | intento 1 | inicia la transacción
+2026-11-07 22:10:16.349 [INFORMACIÓN] Pedido-B | intento 1 | inicia la transacción
+2026-11-07 22:10:16.490 [GRAVE] Pedido-A | error no recuperable (no se reintenta): Stock insuficiente o producto inexistente (id 1)
+java.sql.SQLException: Stock insuficiente o producto inexistente (id 1)
+	at RetryDeadlockDemo.descontar(RetryDeadlockDemo.java:186)
+	at RetryDeadlockDemo.descontarStockEnTransaccion(RetryDeadlockDemo.java:153)
+	at RetryDeadlockDemo.confirmarPedidoConRetry(RetryDeadlockDemo.java:109)
+	at RetryDeadlockDemo.lambda$main$0(RetryDeadlockDemo.java:74)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+2026-11-07 22:10:16.511 [INFORMACIÓN] Pedido-B | bloqueó y descontó 1 del producto id 2
+2026-11-07 22:10:17.026 [GRAVE] Pedido-B | error no recuperable (no se reintenta): Stock insuficiente o producto inexistente (id 1)
+java.sql.SQLException: Stock insuficiente o producto inexistente (id 1)
+	at RetryDeadlockDemo.descontar(RetryDeadlockDemo.java:186)
+	at RetryDeadlockDemo.descontarStockEnTransaccion(RetryDeadlockDemo.java:155)
+	at RetryDeadlockDemo.confirmarPedidoConRetry(RetryDeadlockDemo.java:109)
+	at RetryDeadlockDemo.lambda$main$1(RetryDeadlockDemo.java:76)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+2026-11-07 22:10:17.106 [INFORMACIÓN] Stock DESPUÉS: [id 1 - coca cola 1.5l - stock 50] [id 2 - Producto 1 - stock 72]
+2026-11-07 22:10:17.113 [INFORMACIÓN] Fin de la prueba. Ver detalle en etapa5-retry.log
+2026-11-07 22:13:37.934 [INFORMACIÓN] Stock ANTES: [id 2 - Producto 1 - stock 72] [id 3 - Producto 2 - stock 87]
+2026-11-07 22:13:37.999 [INFORMACIÓN] Pedido-B | intento 1 | inicia la transacción
+2026-11-07 22:13:37.999 [INFORMACIÓN] Pedido-A | intento 1 | inicia la transacción
+2026-11-07 22:13:38.274 [INFORMACIÓN] Pedido-A | bloqueó y descontó 1 del producto id 2
+2026-11-07 22:13:38.275 [INFORMACIÓN] Pedido-B | bloqueó y descontó 1 del producto id 3
+2026-11-07 22:13:38.796 [INFORMACIÓN] Pedido-A | bloqueó y descontó 1 del producto id 3
+2026-11-07 22:13:38.816 [INFORMACIÓN] Pedido-A | intento 1 | COMMIT exitoso
+2026-11-07 22:13:38.845 [ADVERTENCIA] Pedido-B | intento 1 | DEADLOCK (error 1213, SQLSTATE 40001): se hizo ROLLBACK, reintenta en 100 ms
+2026-11-07 22:13:38.947 [INFORMACIÓN] Pedido-B | intento 2 | inicia la transacción
+2026-11-07 22:13:39.026 [INFORMACIÓN] Pedido-B | bloqueó y descontó 1 del producto id 3
+2026-11-07 22:13:39.534 [INFORMACIÓN] Pedido-B | bloqueó y descontó 1 del producto id 2
+2026-11-07 22:13:39.545 [INFORMACIÓN] Pedido-B | intento 2 | COMMIT exitoso
+2026-11-07 22:13:39.623 [INFORMACIÓN] Stock DESPUÉS: [id 2 - Producto 1 - stock 70] [id 3 - Producto 2 - stock 85]
+2026-11-07 22:13:39.630 [INFORMACIÓN] Fin de la prueba. Ver detalle en etapa5-retry.log

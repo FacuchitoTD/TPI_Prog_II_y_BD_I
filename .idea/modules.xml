@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Etapa5-Java/Etapa5-Java.iml" filepath="$PROJECT_DIR$/Etapa5-Java/Etapa5-Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Prog2-FoodStore/Prog2-FoodStore.iml" filepath="$PROJECT_DIR$/Prog2-FoodStore/Prog2-FoodStore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TPI Prog II y BD I.iml" filepath="$PROJECT_DIR$/.idea/TPI Prog II y BD I.iml" />
+    </modules>
+  </component>
+</project>
